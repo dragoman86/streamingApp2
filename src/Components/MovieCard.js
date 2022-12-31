@@ -3,9 +3,12 @@ import { styled } from '@mui/material/styles';
 import { Card,CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, IconButton, Typography} from '@mui/material'
 import { red } from '@mui/material/colors';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PropTypes from 'prop-types';
+import { isPathActive } from "../Helpers/functions";
+import { Link, useLocation } from "react-router-dom";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -20,6 +23,7 @@ const ExpandMore = styled((props) => {
 
 export default function MovieCard({ movie, deleteMovie }) {
   const [expanded, setExpanded] = React.useState(false);
+  const { pathname } = useLocation();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -53,9 +57,21 @@ export default function MovieCard({ movie, deleteMovie }) {
       </CardContent>
       <CardActions disableSpacing>
 
-        <IconButton aria-label="Delete movie" onClick={() => deleteMovie(movie.id)}>
-          <DeleteIcon />
-        </IconButton>
+      {!isPathActive(pathname, "/movies") && (
+          <>
+            <IconButton
+              aria-label='Delete Movie'
+              onClick={() => deleteMovie(movie.id)}
+            >
+              <DeleteIcon />
+            </IconButton>
+            <Link to={`/movies/${movie.id}`}>
+              <IconButton aria-label='share'>
+                <ShareIcon />
+              </IconButton>
+            </Link>
+          </>
+        )}
         
         <ExpandMore
           expand={expanded}

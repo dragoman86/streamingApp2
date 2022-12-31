@@ -2,13 +2,22 @@
   text-align: center;
 }
 
+.Link{
+  text-decoration: none;
+  color: white;
+  text-align: center;
+}
+
 .flexCard{
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin:5rem;
   display: grid;
   grid-template-columns: 400px 400px 400px;
+}
+
+.Cards{
+  text-align: center;
 }
 
 .App-logo {

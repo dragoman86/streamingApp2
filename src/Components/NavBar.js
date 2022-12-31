@@ -8,6 +8,8 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import { Link, useLocation } from 'react-router-dom';
+import { isPathActive } from "../Helpers/functions";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -53,13 +55,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function NavBar({ setSearch}) {
 
+  const { pathname } = useLocation();
+
 //search Method by Title
 const handleSearch = (e) => {
   setSearch(e.target.value)
 } 
 
   return (
-    <Box sx={{ flexGrow: 1 }} style={{ width:'100%'}}>
+    <Box sx={{ flexGrow: 1 }} style={{ width:'100%', textAlign:'center' }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -77,18 +81,20 @@ const handleSearch = (e) => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            STREAMING APP
+            <Link className='Link' to='/'>STREAMING APP</Link>
           </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-              onChange={handleSearch}
-            />
-          </Search>
+          {!isPathActive(pathname, "/movies") && (
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder='Search…'
+                inputProps={{ "aria-label": "search" }}
+                onChange={handleSearch}
+              />
+            </Search>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

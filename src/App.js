@@ -1,21 +1,23 @@
 import NavBar from "./Components/NavBar"
 import './App.css';
 import { useState } from "react";
-import { movies } from "./Data/MoviesData";
-import AddMovieModal from "./Components/AddMovieModal";
-import MovieList from "./Components/MovieList";
+import { Routes, Route } from "react-router-dom";
+import HomePage from './Pages/HomePage';
+import MoviesDetails from './Pages/MoviesDetails';
 
 function App() {
 
   const [search, setSearch] = useState("")
-  const [moviesData, setMoviesData] = useState(movies)
 
   return (
-    <div className="App">
+    <>
     <NavBar setSearch={setSearch} />
-    <AddMovieModal moviesData={moviesData} setMoviesData={setMoviesData} />
-    <MovieList search={search} moviesData={moviesData} setMoviesData={setMoviesData} />
-    </div>
+      <Routes>
+        <Route path='/' element={<HomePage search={search} />} />
+        <Route path='/movies/:movieId' element={<MoviesDetails />} />
+        <Route path='*' element={<h1>404 Not Found Page</h1>} />
+      </Routes>
+      </>
   );
 }
 
